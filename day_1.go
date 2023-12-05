@@ -8,18 +8,18 @@ import (
 	"os"
 	"regexp"
 	"strconv"
-) 
+)
 
-var numberMap = map[string]string {
-	"one": "1",
-	"two":"2",
-	"three":"3",
-	"four":"4",
-	"five": "5",
-	"six": "6",
+var numberMap = map[string]string{
+	"one":   "1",
+	"two":   "2",
+	"three": "3",
+	"four":  "4",
+	"five":  "5",
+	"six":   "6",
 	"seven": "7",
 	"eight": "8",
-	"nine": "9",
+	"nine":  "9",
 }
 
 func getDigit(number string) string {
@@ -39,34 +39,34 @@ func main() {
 	sum := 0
 	re := regexp.MustCompile("[1-9]|one|two|three|four|five|six|seven|eight|nine")
 	for {
-		lineByte, _, err := reader.ReadLine() 
+		lineByte, _, err := reader.ReadLine()
 		line := string(lineByte)
 		if err != nil {
 			if err == io.EOF {
-				break 
+				break
 			}
 			log.Fatalln("unexpected error", err)
 			return
 		}
-		first := "" 
-		last := "" 
+		first := ""
+		last := ""
 
 		for idx, _ := range line {
 			digit := re.FindString(line[:idx+1])
 			if digit != "" {
 				first = getDigit(digit)
-				break;
+				break
 			}
 		}
 
 		for idx, _ := range line {
-			digit := re.FindString(line[len(line)-idx - 1:])
+			digit := re.FindString(line[len(line)-idx-1:])
 			if digit != "" {
 				last = getDigit(digit)
-				break;
+				break
 			}
 		}
-		fmt.Println(line + "->" + "(" + first + ")"+ "(" + last + ")")
+		fmt.Println(line + "->" + "(" + first + ")" + "(" + last + ")")
 		twoDigit, _ := strconv.Atoi(first + last)
 		if len(first+last) != 2 {
 			panic(1)

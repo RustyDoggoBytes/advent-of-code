@@ -10,8 +10,7 @@ import (
 	"strings"
 )
 
-var RED_LIMIT, GREEN_LIMIT, BLUE_LIMIT=12, 13, 14
-
+var RED_LIMIT, GREEN_LIMIT, BLUE_LIMIT = 12, 13, 14
 
 func main() {
 	filename := os.Args[1]
@@ -22,14 +21,13 @@ func main() {
 	gameRegex := regexp.MustCompile("Game ([0-9]+):(.+)")
 	roundRegex := regexp.MustCompile("([0-9]+) (blue|red|green)")
 
-
 	sum := 0
 	sum_power := 0
 	for {
 		lineBytes, _, err := rd.ReadLine()
 		if err != nil {
 			if err == io.EOF {
-				break;
+				break
 			}
 			fmt.Println(err)
 			panic(1)
@@ -38,8 +36,8 @@ func main() {
 
 		result := gameRegex.FindStringSubmatch(line)
 		rounds := strings.Split(result[2], ";")
-		id, _ := strconv.Atoi(result[1]) 
-	 	min_red, min_green, min_blue := 0,0,0
+		id, _ := strconv.Atoi(result[1])
+		min_red, min_green, min_blue := 0, 0, 0
 		isGameValid := true
 		for _, round := range rounds {
 			roundGroup := roundRegex.FindAllStringSubmatch(round, -1)
@@ -58,7 +56,7 @@ func main() {
 					if count_ball > min_green {
 						min_green = count_ball
 					}
-				case "blue": 
+				case "blue":
 					limit = BLUE_LIMIT
 					if count_ball > min_blue {
 						min_blue = count_ball
@@ -73,7 +71,7 @@ func main() {
 				}
 
 			}
-			
+
 		}
 		fmt.Printf("line: %s -> %s\n", line, isGameValid)
 		if isGameValid {
