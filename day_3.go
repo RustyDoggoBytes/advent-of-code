@@ -40,28 +40,28 @@ func checkGearRatio(matrix [][]rune) {
 
 	for rowIdx, column := range matrix {
 		for columnIdx, symbol := range column {
-			digitSet := make(map[string]bool) 
+			digitSet := make(map[string]bool)
 
 			if symbol != '*' {
-				continue;
+				continue
 			}
 
-			for i := rowIdx - 1; i <= (rowIdx+1); i++ {
+			for i := rowIdx - 1; i <= (rowIdx + 1); i++ {
 				if i < 0 || i >= len(matrix) {
 					continue
 				}
 
 				row := matrix[i]
-				for j := columnIdx - 1; j <= (columnIdx+1); j++ {
+				for j := columnIdx - 1; j <= (columnIdx + 1); j++ {
 					if j < 0 || j >= len(row) {
 						continue
 					}
 
 					surroundingChar := matrix[i][j]
 					if unicode.IsNumber(surroundingChar) {
-						digit := string(surroundingChar) 
+						digit := string(surroundingChar)
 
-						k := j+1
+						k := j + 1
 						for {
 							if k >= len(row) || !unicode.IsNumber(matrix[i][k]) {
 								break
@@ -71,13 +71,13 @@ func checkGearRatio(matrix [][]rune) {
 							k++
 						}
 
-						k = j-1
+						k = j - 1
 						for {
 							if k < 0 || !unicode.IsNumber(matrix[i][k]) {
 								break
 							}
 							fmt.Printf("digit %s, %c row=%d col=%d\n", digit, matrix[i][k], i, k)
-							digit = string(matrix[i][k]) + digit 
+							digit = string(matrix[i][k]) + digit
 							k--
 						}
 						digitSet[digit] = true
@@ -88,11 +88,11 @@ func checkGearRatio(matrix [][]rune) {
 			}
 			digitCount := len(digitSet)
 
-			if digitCount == 2  {
+			if digitCount == 2 {
 				setSum := 1
 				for digit, _ := range digitSet {
 					digitInt, _ := strconv.Atoi(digit)
-					setSum *= digitInt 
+					setSum *= digitInt
 				}
 				sum += setSum
 			}
@@ -136,13 +136,13 @@ func checkEngineParts(matrix [][]rune) {
 }
 
 func checkSurroundings(matrix [][]rune, startIdx int, endIdx int, rowIdx int) bool {
-	for i := rowIdx - 1; i <= (rowIdx+1); i++ {
+	for i := rowIdx - 1; i <= (rowIdx + 1); i++ {
 		if i < 0 || i >= len(matrix) {
 			continue
 		}
 
 		row := matrix[i]
-		for j := startIdx - 1; j <= (endIdx+1); j++ {
+		for j := startIdx - 1; j <= (endIdx + 1); j++ {
 			if j < 0 || j >= len(row) {
 				continue
 			}
