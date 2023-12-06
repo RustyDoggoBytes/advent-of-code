@@ -9,6 +9,9 @@ import (
 	"strconv"
 	"strings"
 )
+type Seed struct {
+	SeedStart, SeedRange int
+}
 
 type ProductionMap struct {
 	DestinationStart, SourceStart, Range int
@@ -66,12 +69,25 @@ func main() {
 
 		if strings.Contains(line, "seeds") {
 			seedsArray := strings.Split(line, " ")
-			for _, seed := range seedsArray {
-				if seedInt, err := strconv.Atoi(seed); err == nil {
+			for i := 0; i < len(seedsArray); i++  {
+				seed := seedsArray[i]
+
+				if seedInt, err	:= strconv.Atoi(seed); err == nil {
 					seeds = append(seeds, seedInt)
 				}
 			}
 
+
+			newSeeds := make([]int,0)
+			for i := 0; i <len(seeds); i += 2 {
+				seed := seeds[i]
+				seedRange := seeds[i+1]
+
+				for j := 0; j < seedRange; j++ {
+					newSeeds = append(newSeeds, seed+j)
+				}
+			}
+			seeds = newSeeds
 		} else if strings.Contains(line, "seed-to-soil map:") {
 			seedToSoilMap = createMap(rd)
 		} else if strings.Contains(line, "soil-to-fertilizer map:") {
@@ -87,6 +103,7 @@ func main() {
 		} else if strings.Contains(line,"humidity-to-location map:") {
 			humidityToLocationMap = createMap(rd)
 		}
+
 	}
 
 
