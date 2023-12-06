@@ -9,13 +9,13 @@ import (
 	"strconv"
 	"strings"
 )
+
 type Seed struct {
 	SeedStart, SeedRange int
 }
 
 type ProductionMap struct {
 	DestinationStart, SourceStart, Range int
-
 }
 
 func createMap(rd *bufio.Reader) []ProductionMap {
@@ -69,17 +69,16 @@ func main() {
 
 		if strings.Contains(line, "seeds") {
 			seedsArray := strings.Split(line, " ")
-			for i := 0; i < len(seedsArray); i++  {
+			for i := 0; i < len(seedsArray); i++ {
 				seed := seedsArray[i]
 
-				if seedInt, err	:= strconv.Atoi(seed); err == nil {
+				if seedInt, err := strconv.Atoi(seed); err == nil {
 					seeds = append(seeds, seedInt)
 				}
 			}
 
-
-			newSeeds := make([]int,0)
-			for i := 0; i <len(seeds); i += 2 {
+			newSeeds := make([]int, 0)
+			for i := 0; i < len(seeds); i += 2 {
 				seed := seeds[i]
 				seedRange := seeds[i+1]
 
@@ -100,23 +99,22 @@ func main() {
 			lightToTemperatureMap = createMap(rd)
 		} else if strings.Contains(line, "temperature-to-humidity map:") {
 			temperatureToHumidityMap = createMap(rd)
-		} else if strings.Contains(line,"humidity-to-location map:") {
+		} else if strings.Contains(line, "humidity-to-location map:") {
 			humidityToLocationMap = createMap(rd)
 		}
 
 	}
 
-
 	lowestLocation := math.MaxInt
 	for _, seed := range seeds {
 
-		soil :=  getNextPart(seedToSoilMap, seed)
-		fertilizer :=  getNextPart(soilToFertilizerMap, soil)
-		water :=  getNextPart(fertilizerToWaterMap, fertilizer)
-		light :=  getNextPart(waterToLightMap, water)
-		temp :=  getNextPart(lightToTemperatureMap, light)
-		humidity :=  getNextPart(temperatureToHumidityMap, temp)
-		location :=  getNextPart(humidityToLocationMap, humidity)
+		soil := getNextPart(seedToSoilMap, seed)
+		fertilizer := getNextPart(soilToFertilizerMap, soil)
+		water := getNextPart(fertilizerToWaterMap, fertilizer)
+		light := getNextPart(waterToLightMap, water)
+		temp := getNextPart(lightToTemperatureMap, light)
+		humidity := getNextPart(temperatureToHumidityMap, temp)
+		location := getNextPart(humidityToLocationMap, humidity)
 
 		if location < lowestLocation {
 			lowestLocation = location
@@ -131,8 +129,8 @@ func getNextPart(fromToMap []ProductionMap, value int) int {
 
 	for _, productionMap := range fromToMap {
 		sourceStart := productionMap.SourceStart
-		if value >= sourceStart && value <= (sourceStart + productionMap.Range) { 
-			add := value - sourceStart 
+		if value >= sourceStart && value <= (sourceStart+productionMap.Range) {
+			add := value - sourceStart
 			return productionMap.DestinationStart + add
 		}
 
