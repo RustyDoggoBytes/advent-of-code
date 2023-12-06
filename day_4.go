@@ -62,14 +62,14 @@ func main() {
 
 		for j := 0; j < card.CopyCount; j++ {
 			for k := 1; k <= card.MatchingCount; k++ {
-				cards[i + k].CopyCount++
+				cards[i+k].CopyCount++
 			}
 		}
 	}
 	fmt.Println("winning sums", sum)
 
 	cardsSum := 0
-	for _, card:= range cards {
+	for _, card := range cards {
 		cardsSum += card.CopyCount
 	}
 	fmt.Println("cards sums", cardsSum)
