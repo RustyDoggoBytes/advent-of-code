@@ -49,15 +49,23 @@ func main() {
 		distance, _ := strconv.Atoi(distanceStr[i])
 		races = append(races, Race{Distance: distance, Time: time})
 	}
-	fmt.Println(races)
 
 	sum := 1
+	kerningDistanceStr := ""
+	kerningTimeStr := "" 
 	for _, race := range races {
 		recordBeat := race.calculateNumberOfWaysToBeatRecord()
 		if recordBeat > 0 {
 			sum *= recordBeat
 		}
+		kerningDistanceStr += strconv.Itoa(race.Distance)
+		kerningTimeStr += strconv.Itoa(race.Time)
 	}
+
 	fmt.Println(sum)
 
+	kerningDistance, _ := strconv.Atoi(kerningDistanceStr)
+	kerningTime, _ := strconv.Atoi(kerningTimeStr)
+	superRace := Race {Distance: kerningDistance, Time: kerningTime}  
+	fmt.Println(superRace.calculateNumberOfWaysToBeatRecord())
 }
